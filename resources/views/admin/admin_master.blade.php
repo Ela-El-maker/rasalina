@@ -27,7 +27,15 @@
         <!-- App Css-->
         <link href="{{ asset('backend/assets/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
 
+
+        <!--- Toastr Css-->
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
+
+
+
+
     </head>
+
 
     <body data-topbar="dark">
     
@@ -73,6 +81,8 @@
 
         <!-- JAVASCRIPT -->
         <script src="{{ asset('backend/assets/libs/jquery/jquery.min.js')}}"></script>
+        <script src="{{ asset('backend/assets/libs/jquery/jquery.uploadPreview.js')}}"></script>
+        <script src="{{ asset('backend/assets/libs/jquery/jquery.uploadPreview.min.js')}}"></script>
         <script src="{{ asset('backend/assets/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
         <script src="{{ asset('backend/assets/libs/metismenu/metisMenu.min.js')}}"></script>
         <script src="{{ asset('backend/assets/libs/simplebar/simplebar.min.js')}}"></script>
@@ -98,6 +108,34 @@
 
         <!-- App js -->
         <script src="{{ asset('backend/assets/js/app.js')}}"></script>
+
+
+        <!---- Toastr js---->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+        <script>
+         @if(Session::has('message'))
+         var type = "{{ Session::get('alert-type','info') }}"
+         switch(type){
+            case 'info':
+            toastr.info(" {{ Session::get('message') }} ");
+            break;
+        
+            case 'success':
+            toastr.success(" {{ Session::get('message') }} ");
+            break;
+        
+            case 'warning':
+            toastr.warning(" {{ Session::get('message') }} ");
+            break;
+        
+            case 'error':
+            toastr.error(" {{ Session::get('message') }} ");
+            break; 
+         }
+         @endif 
+        </script>
+        
     </body>
 
 </html>
