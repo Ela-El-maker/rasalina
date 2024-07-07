@@ -53,9 +53,10 @@
 
                             <h4 class="card-title">Home Slider Page</h4><br><br>
 
-                            <form action="{{ route('store.profile') }}" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('update.slide') }}" method="post" enctype="multipart/form-data">
                                 @csrf
 
+                                <input type="hidden" name="id" value="{{$homeSlide->id}}">
                                 <div class="row mb-3">
                                     <label for="example-text-input" class="col-sm-2 col-form-label">Title</label>
                                     <div class="col-sm-10">
@@ -93,11 +94,11 @@
                                 </div> --}}
 
                                 {{-- <div class="row mb-3">
-                                    <label for="example-text-input" class="col-sm-2 col-form-label">Profile Image</label>
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">Slide Image</label>
 
                                     <div id="image-preview">
                                         <label for="image-upload" id="image-label">Choose File</label>
-                                        <input type="file" name="profile_image" id="image-upload" />
+                                        <input type="file" name="home_slide" id="image-upload" />
                                     </div>
                                 </div> --}}
 
@@ -107,12 +108,12 @@
                                     <div class="col-sm-10">
                                         <div id="image-preview">
                                             <img id="preview-img"
-                                                src="{{ !empty($homeSlide->profile_image) ? url('uploads/home_slide/' . $homeSlide->profile_image) : url('uploads/no_image.jpg') }}"
+                                                src="{{ !empty($homeSlide->home_slide) ? url( $homeSlide->home_slide) : url('uploads/no_image.jpg') }}"
                                                 alt="Slide Image"
                                                 style="max-width: 200px; max-height: 200px; display: block; margin-bottom: 10px;">
                                             <label for="image-upload" id="image-label" class="btn btn-primary">Choose
                                                 File</label>
-                                            <input type="file" name="profile_image" id="image-upload"
+                                            <input type="file" name="home_slide" id="image-upload"
                                                 style="display: none;" onchange="previewImage(event)" />
                                         </div>
                                     </div>
