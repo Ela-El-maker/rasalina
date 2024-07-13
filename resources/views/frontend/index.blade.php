@@ -1184,3 +1184,17 @@
     </section>
     <!-- contact-area-end -->
 @endsection
+
+
+
+
+
+
+
+
+//In Controller
+
+$homeslider = HomeSlide::first();
+
+//In blade
+<img src="{{ asset($homeslider->home_slide) }}" alt="">
