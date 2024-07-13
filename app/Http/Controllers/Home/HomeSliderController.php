@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Home;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\HomeSlide;
-use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Image;
 
 class HomeSliderController extends Controller
 {
@@ -37,6 +36,7 @@ class HomeSliderController extends Controller
             $originalPublicDir = 'uploads/home_slide/' . $fileName; // Define the path to save the file
 
             // Create an instance of the image from the uploaded file and correct its orientation
+            // Imported image class
             $img = Image::make($uploadedFile)->orientate();
 
             // Determine whether to set width or height to null for aspect ratio resizing
