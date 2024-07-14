@@ -6,10 +6,13 @@ use App\Models\HomeSlide;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Image;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
+
 
 class HomeSliderController extends Controller
 {
+
     //
     public function HomeSlider()
     {
@@ -21,6 +24,7 @@ class HomeSliderController extends Controller
     {
         $slideId = $request->id;
         if ($request->file('home_slide')) {
+            $findHomeSlide = HomeSlide::findOrFail($slideId);
             $width = 636; // Maximum width for the image
             $height = 852; // Maximum height for the image
 
@@ -30,25 +34,32 @@ class HomeSliderController extends Controller
 
             // Generate a slug from the title
             $imageSlug = Str::slug($request->title);
+            $imageName = time().'.'.$extension;
+            $uploadedFile->move('uploads/home_slide',$imageName);
+
+            $imgManager = new ImageManager(new Driver());
+            $thumbImage= $imgManager->read('uploads/home_slide/'.$imageName);
 
             // Construct the file name using the slug, timestamp, and original extension
             $fileName = $imageSlug . '-' . $currentTimestamp . '.' . $extension;
             $originalPublicDir = 'uploads/home_slide/' . $fileName; // Define the path to save the file
 
             // Create an instance of the image from the uploaded file and correct its orientation
-            // Imported image class
-            $img = Image::make($uploadedFile)->orientate();
 
             // Determine whether to set width or height to null for aspect ratio resizing
-            $img->height() > $img->width() ? ($width = null) : ($height = null);
+            $thumbImage->height() > $thumbImage->width() ? ($width = null) : ($height = null);
 
             // Resize the image while maintaining the aspect ratio
-            $img->resize($width, $height, function ($constraint) {
+            $thumbImage->resize($width, $height, function ($constraint) {
                 $constraint->aspectRatio();
             });
 
             // Save the resized image to the specified path in the public directory
-            $img->save(public_path($originalPublicDir));
+            $thumbImage->save(public_path($originalPublicDir));
+            if (Str::startsWith($findHomeSlide->home_slide, 'uploads/home_slide/')) {
+                unlink(public_path($findHomeSlide->home_slide));
+            }
+            unlink(public_path('uploads/home_slide/'.$imageName));
 
             HomeSlide::findOrFail($slideId)->update([
                 'title' => $request->title,
