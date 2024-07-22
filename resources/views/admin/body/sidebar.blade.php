@@ -29,12 +29,27 @@
                 <li>
                     <a href="#" class="waves-effect">
                         <i class="ri-dashboard-line"></i><span class="badge rounded-pill bg-success float-end">3</span>
-                        <span>Dashboard</span>
+                        <span>Home Slide SetUp</span>
                     </a>
 
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{route('home.slide')}}">Home Slide</a></li>
-                        <li><a href="email-read.html">Read Email</a></li>
+                        
+                    </ul>
+
+                </li>
+
+                <li>
+                    <a href="#" class="waves-effect">
+                        <i class="ri-dashboard-line"></i><span class="badge rounded-pill bg-success float-end">3</span>
+                        <span>About Page SetUp</span>
+                    </a>
+
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{route('about.page')}}">About Page</a></li>
+                        <li><a href="{{route('about.multi.image')}}">About Multi Images</a></li>
+                        <li><a href="{{route('all.multi.image')}}">All Multi Images</a></li>
+                        
                     </ul>
 
                 </li>
