@@ -107,69 +107,128 @@ class AboutController extends Controller
         return view('admin.about_page.multi_image');
     }
 
-    public function storeMultiImage(Request  $request)
-    {
+    public function storeMultiImage(Request $request)
+{
+    $request->validate([
+        'multi_image.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
 
-            $request->validate([
-                'multi_image.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            ]);
+    $images = $request->file('multi_image');
+
+    foreach ($images as $multi_image) {
+        $width = 636; // Maximum width for the image
+        $height = 950; // Maximum height for the image
+
+        $uploadedFile = $multi_image;
+        $extension = $uploadedFile->getClientOriginalExtension();
+        $uniqueId = uniqid();
+        $imageName = $uniqueId . '.' . $extension;
+        $uploadedFile->move('uploads/multi_image', $imageName);
+
+        $imgManager = new ImageManager(new Driver());
+        $thumbImage = $imgManager->read('uploads/multi_image/' . $imageName);
+
+        // Construct the file name using a slug, unique ID, and original extension
+        $imageSlug = Str::slug($request->title);
+        $fileName = $imageSlug . '-' . $uniqueId . '.' . $extension;
+        $originalPublicDir = 'uploads/multi_image/' . $fileName;
+
+        // Determine whether to set width or height to null for aspect ratio resizing
+        $thumbImage->height() > $thumbImage->width() ? ($width = null) : ($height = null);
+
+        // Resize the image while maintaining the aspect ratio
+        $thumbImage->resize($width, $height, function ($constraint) {
+            $constraint->aspectRatio();
+        });
+
+        // Save the resized image to the specified path in the public directory
+        $thumbImage->save(public_path($originalPublicDir));
+
+        // Remove the original image
+        $filePath = public_path('uploads/multi_image/' . $imageName);
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
+
+        MultiImage::insert([
+            'multi_image' => $originalPublicDir,
+            'created_at' => Carbon::now()
+        ]);
+    }
+
+    $notification = [
+        'message' => 'MultiImage Page Updated with images Successfully.',
+        'alert-type' => 'success',
+    ];
+
+    return redirect()->route('all.multi.image')->with($notification);
+}
+
+
+
+    // public function storeMultiImage(Request  $request)
+    // {
+
+    //         $request->validate([
+    //             'multi_image.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+    //         ]);
         
-            $images = $request->file('multi_image');
+    //         $images = $request->file('multi_image');
 
-        foreach($images as $multi_image){
+    //     foreach($images as $multi_image){
        
             
-            $width = 636; // Maximum width for the image
-            $height = 950; // Maximum height for the image
+    //         $width = 636; // Maximum width for the image
+    //         $height = 950; // Maximum height for the image
 
-            $currentTimestamp = time(); // Get the current timestamp, e.g., 1631703954
-            $uploadedFile = $multi_image; // Retrieve the uploaded file from the request
-            $extension = $uploadedFile->getClientOriginalExtension(); // Get the original file extension
+    //         $currentTimestamp = time(); // Get the current timestamp, e.g., 1631703954
+    //         $uploadedFile = $multi_image; // Retrieve the uploaded file from the request
+    //         $extension = $uploadedFile->getClientOriginalExtension(); // Get the original file extension
 
-            // Generate a slug from the title
-            $imageSlug = Str::slug($request->title);
-            $imageName = time().'.'.$extension;
-            $uploadedFile->move('uploads/multi_image',$imageName);
+    //         // Generate a slug from the title
+    //         $imageSlug = Str::slug($request->title);
+    //         $imageName = time().'.'.$extension;
+    //         $uploadedFile->move('uploads/multi_image',$imageName);
 
-            $imgManager = new ImageManager(new Driver());
-            $thumbImage= $imgManager->read('uploads/multi_image/'.$imageName);
+    //         $imgManager = new ImageManager(new Driver());
+    //         $thumbImage= $imgManager->read('uploads/multi_image/'.$imageName);
 
-            // Construct the file name using the slug, timestamp, and original extension
-            $fileName = $imageSlug . '-' . $currentTimestamp . '.' . $extension;
-            $originalPublicDir = 'uploads/multi_image/' . $fileName; // Define the path to save the file
+    //         // Construct the file name using the slug, timestamp, and original extension
+    //         $fileName = $imageSlug . '-' . $currentTimestamp . '.' . $extension;
+    //         $originalPublicDir = 'uploads/multi_image/' . $fileName; // Define the path to save the file
 
-            // Create an instance of the image from the uploaded file and correct its orientation
+    //         // Create an instance of the image from the uploaded file and correct its orientation
 
-            // Determine whether to set width or height to null for aspect ratio resizing
-            $thumbImage->height() > $thumbImage->width() ? ($width = null) : ($height = null);
+    //         // Determine whether to set width or height to null for aspect ratio resizing
+    //         $thumbImage->height() > $thumbImage->width() ? ($width = null) : ($height = null);
 
-            // Resize the image while maintaining the aspect ratio
-            $thumbImage->resize($width, $height, function ($constraint) {
-                $constraint->aspectRatio();
-            });
+    //         // Resize the image while maintaining the aspect ratio
+    //         $thumbImage->resize($width, $height, function ($constraint) {
+    //             $constraint->aspectRatio();
+    //         });
 
-            // Save the resized image to the specified path in the public directory
-            $thumbImage->save(public_path($originalPublicDir));
+    //         // Save the resized image to the specified path in the public directory
+    //         $thumbImage->save(public_path($originalPublicDir));
 
-            $filePath = public_path('uploads/multi_image/' . $imageName);
-            if (file_exists($filePath)) {
-                unlink($filePath);
-            }
+    //         $filePath = public_path('uploads/multi_image/' . $imageName);
+    //         if (file_exists($filePath)) {
+    //             unlink($filePath);
+    //         }
 
-            MultiImage::insert([
+    //         MultiImage::insert([
                 
-                'multi_image' => $originalPublicDir,
-                'created_at' => Carbon::now()
-            ]);
-        }
-            $notification = [
-                'message' => 'MultiImage Page Updated with images Successfully.',
-                'alert-type' => 'success',
-            ];
+    //             'multi_image' => $originalPublicDir,
+    //             'created_at' => Carbon::now()
+    //         ]);
+    //     }
+    //         $notification = [
+    //             'message' => 'MultiImage Page Updated with images Successfully.',
+    //             'alert-type' => 'success',
+    //         ];
 
-            return redirect()->route('all.multi.image')->with($notification);
+    //         return redirect()->route('all.multi.image')->with($notification);
         
-    }
+    // }
 
 
     public function allMultiImage()
