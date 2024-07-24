@@ -152,8 +152,8 @@ public function updatePortfolio(Request $request)
 
             // Save the resized image to the specified path in the public directory
             $thumbImage->save(public_path($originalPublicDir));
-            if (Str::startsWith($findPortfolio->home_slide, 'uploads/portfolio/')) {
-                unlink(public_path($findPortfolio->home_slide));
+            if (Str::startsWith($findPortfolio->portfolio_image, 'uploads/portfolio/')) {
+                unlink(public_path($findPortfolio->portfolio_image));
             }
             unlink(public_path('uploads/portfolio/'.$imageName));
 
