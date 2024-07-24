@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Home\HomeSliderController;
 use App\Http\Controllers\Home\AboutController;
+use App\Http\Controllers\Home\PortfolioController;
 
 
 
@@ -41,15 +42,26 @@ Route::controller(AboutController::class)->group(function(){
     Route::get('/edit/multi/image/{id}', 'editMultiImage')->name('edit.multi.image');
     Route::post('/update/multi/image/', 'updateMultiImage')->name('update.multi.image');
     // Route::get('/delete/multi/image/{id}', 'deleteMultiImage')->name('delete.multi.image');
-
-
-
-
 });
 
 Route::delete('/delete/multi/image/{id}', [AboutController::class, 'deleteMultiImage'])->name('delete.multi.image');
 
 
+// Portfolio All routes
+Route::controller(PortfolioController::class)->group(function(){
+    Route::get('/all/portfolio', 'AllPortfolio')->name('all.portfolio');
+    Route::get('/add/portfolio', 'addPortfolio')->name('add.portfolio');
+    Route::post('/store/portfolio', 'storePortfolio')->name('store.portfolio');
+    Route::get('/portfolio/details/{id}', 'HomePortfolioDetails')->name('home.portfolio.details');
+
+    Route::get('/edit/portfolio/{id}', 'editPortfolio')->name('edit.portfolio');
+    Route::post('/update/portfolio', 'updatePortfolio')->name('update.portfolio');
+
+    // Route::get('/delete/portfolio/{id}', 'deletePortfolio')->name('delete.portfolio');
+
+    Route::delete('/delete/portfolio/{id}', [PortfolioController::class, 'deletePortfolio'])->name('delete.portfolio');
+
+});
 
 
 Route::get('/dashboard', function () {

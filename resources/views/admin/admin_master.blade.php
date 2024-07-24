@@ -156,12 +156,22 @@
             }
         @endif
     </script>
-    <script src="{{ asset('backend/assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-    <!-- init js -->
-    <script src="{{ asset('backend/assets/js/pages/form-editor.init.js') }}"></script>
+    
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+    <!--- Show Dynamic validation errors--->
+    <script>
+        @if (!empty($errors->all()))
+            @foreach ($errors->all() as $error)
+                // Display an error toast, with a title
+                toastr.error('{{ $error }}')
+            @endforeach
+        @endif
+    </script>
+
+    
     <script>
         $(document).ready(function() {
     $.ajaxSetup({
@@ -218,6 +228,10 @@
 
     </script>
     {{-- <script src="{{ asset('backend/assets/js/code.js') }}"></script> --}}
+    <script src="{{ asset('backend/assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('backend/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <!-- init js -->
+    <script src="{{ asset('backend/assets/js/pages/form-editor.init.js') }}"></script>
 </body>
 
 </html>

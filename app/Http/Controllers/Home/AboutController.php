@@ -99,7 +99,8 @@ class AboutController extends Controller
     public  function HomeAbout()
     {
         $about = About::find(1);
-        return view('frontend.home_all.about', compact('about'));
+        $allMultiImage = MultiImage::all();
+        return view('frontend.home_all.about', compact('about','allMultiImage'));
     }
 
     public function aboutMultiImage()
