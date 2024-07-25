@@ -11,7 +11,6 @@ use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Support\Carbon;
 
-
 class AboutController extends Controller
 {
     //

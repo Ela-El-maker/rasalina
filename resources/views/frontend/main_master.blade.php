@@ -19,6 +19,9 @@
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/default.css')}}">
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/style.css')}}">
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/responsive.css')}}">
+         <!--- Toastr Css-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
+
     </head>
     <body>
 
@@ -65,5 +68,8 @@
         <script src="{{asset('frontend/assets/js/wow.min.js')}}"></script>
         <script src="{{asset('frontend/assets/js/plugins.js')}}"></script>
         <script src="{{asset('frontend/assets/js/main.js')}}"></script>
+         <!---- Toastr js---->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
     </body>
 </html>

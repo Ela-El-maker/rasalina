@@ -9,6 +9,7 @@ use App\Http\Controllers\Home\PortfolioController;
 use App\Http\Controllers\Home\BlogCategoryController;
 use App\Http\Controllers\Home\BlogController;
 use App\Http\Controllers\Home\FooterController;
+use App\Http\Controllers\Home\ContactController;
 
 Route::get('/', function () {
     return view('frontend.index');
@@ -94,6 +95,16 @@ Route::controller(FooterController::class)->group(function(){
     Route::get('/footer/setup', 'footerSetup')->name('footer.setup');
     Route::post('/footer/update', 'footerUpdate')->name('footer.update');
     Route::get('/footer', 'HomeFooter')->name('home.footer');
+
+});
+
+Route::controller(ContactController::class)->group(function(){
+    Route::get('/contact', 'contactMe')->name('contact.me');
+    Route::post('/store/message', 'storeMessage')->name('store.message');
+    Route::get('/contact/message', 'contactMessage')->name('contact.message');
+
+Route::delete('/delete/contact/message/{id}', 'deleteContactmessage')->name('delete.contact.message');
+
 
 });
 
