@@ -193,6 +193,13 @@ public function deletePortfolio($id)
     // Find the item by its ID and throw a 404 error if not found
     try {
         $item = Portfolio::findOrFail($id);
+        // Check if the project has an associated image
+        if (Str::startsWith($item->portfolio_image, 'uploads/portfolio/')) {
+            $imagePath = public_path($item->portfolio_image);
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+        }
 
         if ($item->delete()) {
             return response()->json([
