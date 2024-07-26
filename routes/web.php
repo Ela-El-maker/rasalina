@@ -38,7 +38,6 @@ Route::controller(HomeSliderController::class)->group(function(){
 Route::controller(AboutController::class)->group(function(){
     Route::get('/about/page', 'AboutPage')->name('about.page');
     Route::post('/update/about', 'updateAbout')->name('update.about');
-    Route::get('/about', 'HomeAbout')->name('home.about');
     Route::get('/about/multi/image', 'aboutMultiImage')->name('about.multi.image');
     Route::post('/store/multi/image', 'storeMultiImage')->name('store.multi.image');
     Route::get('/all/multi/image', 'allMultiImage')->name('all.multi.image');
@@ -55,9 +54,7 @@ Route::controller(PortfolioController::class)->group(function(){
     Route::get('/all/portfolio', 'AllPortfolio')->name('all.portfolio');
     Route::get('/add/portfolio', 'addPortfolio')->name('add.portfolio');
     Route::post('/store/portfolio', 'storePortfolio')->name('store.portfolio');
-    Route::get('/portfolio/details/{id}', 'HomePortfolioDetails')->name('home.portfolio.details');
-    Route::get('/portfolio', 'homePortfolio')->name('home.portfolio');
-
+  
     Route::get('/edit/portfolio/{id}', 'editPortfolio')->name('edit.portfolio');
     Route::post('/update/portfolio', 'updatePortfolio')->name('update.portfolio');
 
@@ -86,19 +83,24 @@ Route::controller(BlogController::class)->group(function(){
     Route::get('/edit/blog/{id}', 'editBlog')->name('edit.blog');
     Route::post('/update/blog', 'updateBlog')->name('update.blog');
     Route::delete('/delete/blog/{id}', 'deleteBlog')->name('delete.blog');
-    Route::get('/blog/details/{id}', 'HomeBlogDetails')->name('home.blog.details');
-    Route::get('/category/blog/{id}', 'CategoryBlog')->name('category.blog');
     
-    Route::get('/blog', 'homeBlog')->name('home.blog');
 
 });
 
 Route::controller(FooterController::class)->group(function(){
     Route::get('/footer/setup', 'footerSetup')->name('footer.setup');
     Route::post('/footer/update', 'footerUpdate')->name('footer.update');
-    Route::get('/footer', 'HomeFooter')->name('home.footer');
 
 });
+
+
+});
+
+// Public About Route
+
+Route::get('/about', [AboutController::class, 'HomeAbout'])->name('home.about');
+Route::get('/category/blog/{id}',[BlogController::class, 'CategoryBlog'])->name('category.blog');
+
 Route::controller(ContactController::class)->group(function(){
     Route::get('/contact', 'contactMe')->name('contact.me');
     Route::post('/store/message', 'storeMessage')->name('store.message');
@@ -109,9 +111,12 @@ Route::delete('/delete/contact/message/{id}', 'deleteContactmessage')->name('del
 
 });
 
-});
+Route::get('/blog', [BlogCategoryController::class, 'homeBlog'])->name('home.blog');
+Route::get('/blog/details/{id}', [BlogController::class, 'HomeBlogDetails'])->name('home.blog.details');
+Route::get('/portfolio/details/{id}',[PortfolioController::class, 'HomePortfolioDetails'])->name('home.portfolio.details');
+Route::get('/portfolio',[PortfolioController::class, 'homePortfolio'])->name('home.portfolio');
 
-
+Route::get('/footer',  [FooterController::class, 'HomeFooter'])->name('home.footer');
 
 
 

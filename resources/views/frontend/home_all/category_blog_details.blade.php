@@ -89,10 +89,10 @@
                                 @foreach ($allBlogs as $recent)
                                 <li class="rc__post__item">
                                 <div class="rc__post__thumb">
-                                    <a href="blog-details.html"><img src="{{asset($recent->blog_image)}}" alt=""></a>
+                                    <a href="{{route('home.blog.details',$blog->id)}}"><img src="{{asset($recent->blog_image)}}" alt=""></a>
                                 </div>
                                 <div class="rc__post__content">
-                                    <h5 class="title"><a href="blog-details.html">{{$recent->blog_title}}</a></h5>
+                                    <h5 class="title"><a href="{{route('home.blog.details',$blog->id)}}">{{$recent->blog_title}}</a></h5>
                                     <span class="post-date"><i class="fal fa-calendar-alt"></i> {{Carbon\Carbon::parse($recent->created_at)->diffForHumans()}}</span>
                                 </div>
                             </li>
