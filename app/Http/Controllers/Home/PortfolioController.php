@@ -231,6 +231,12 @@ public function HomePortfolioDetails($id)
 
     return view('frontend.home_all.portfolio_details', compact('portfolioItems','allMultiImage'));
 }
+public function homePortfolio()
+{
+    $allPortfolios = Portfolio::latest()->get();
+    // $blogCategories = Portfolio::orderBy('blog_category','ASC')->get();
+    return view('frontend.home_all.portfolios',compact('allPortfolios'));
+}
 
 
 }

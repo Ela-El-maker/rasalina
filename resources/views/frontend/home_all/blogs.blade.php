@@ -2,6 +2,9 @@
 
 @section('main')
 
+@section('title')
+Felo Ela | Blogs
+@endsection
 <main>
 
     <!-- breadcrumb-area -->
@@ -64,6 +67,8 @@
                     
                    
                     <div class="pagination-wrap">
+                        {{-- {{$allBlogs->links}} --}}
+                        
                         <nav aria-label="Page navigation example">
                             <ul class="pagination">
                                 <li class="page-item"><a class="page-link" href="#"><i class="far fa-long-arrow-left"></i></a></li>

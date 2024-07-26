@@ -15,6 +15,7 @@ Route::get('/', function () {
     return view('frontend.index');
 });
 
+Route::middleware(['auth'])->group(function(){
 
 // Admin All routes
 Route::controller(AdminController::class)->group(function(){
@@ -55,6 +56,7 @@ Route::controller(PortfolioController::class)->group(function(){
     Route::get('/add/portfolio', 'addPortfolio')->name('add.portfolio');
     Route::post('/store/portfolio', 'storePortfolio')->name('store.portfolio');
     Route::get('/portfolio/details/{id}', 'HomePortfolioDetails')->name('home.portfolio.details');
+    Route::get('/portfolio', 'homePortfolio')->name('home.portfolio');
 
     Route::get('/edit/portfolio/{id}', 'editPortfolio')->name('edit.portfolio');
     Route::post('/update/portfolio', 'updatePortfolio')->name('update.portfolio');
@@ -97,7 +99,6 @@ Route::controller(FooterController::class)->group(function(){
     Route::get('/footer', 'HomeFooter')->name('home.footer');
 
 });
-
 Route::controller(ContactController::class)->group(function(){
     Route::get('/contact', 'contactMe')->name('contact.me');
     Route::post('/store/message', 'storeMessage')->name('store.message');
@@ -107,6 +108,11 @@ Route::delete('/delete/contact/message/{id}', 'deleteContactmessage')->name('del
 
 
 });
+
+});
+
+
+
 
 
 Route::get('/dashboard', function () {

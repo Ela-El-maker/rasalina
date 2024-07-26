@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Support\Carbon;
-
+// use Illuminate\Pagination;
 
 
 class BlogController extends Controller
@@ -251,6 +251,7 @@ public function HomeBlogDetails($id)
     return view('frontend.home_all.blog_details', compact('blogItems','allMultiImage','allBlogs','blogCategories'));
 }
 
+
 public function CategoryBlog($id)
 {
     $allBlogs = Blog::latest()->limit(5)->get();
@@ -262,7 +263,7 @@ public function CategoryBlog($id)
 
 public function homeBlog()
 {
-    $allBlogs = Blog::latest()->get();
+    $allBlogs = Blog::latest()->paginate(3);
     $blogCategories = BlogCategory::orderBy('blog_category','ASC')->get();
     return view('frontend.home_all.blogs',compact('allBlogs','blogCategories'));
 }

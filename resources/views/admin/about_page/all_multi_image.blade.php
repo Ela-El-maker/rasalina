@@ -44,10 +44,10 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @php($i = 1)
-                                    @foreach ($allMultiImage as $item)
+                        
+                                    @foreach ($allMultiImage as $key=> $item)
                                         <tr>
-                                            <td>{{ $i++ }}</td>
+                                            <td>{{ $key+1 }}</td>
                                             <td><img src="{{ asset($item->multi_image) }}" style="height: 70px; width:60px"></td>
                                             <td>{{ $item->multi_image }}</td>
                                             <td>{{ $item->created_at }}</td>

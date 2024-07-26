@@ -1,6 +1,10 @@
 @extends('frontend.main_master')
 
 @section('main')
+
+@section('title')
+Felo Ela | Website
+@endsection
     <!-- banner-area -->
     @include('frontend.home_all.home_slide')
     <!-- banner-area-end -->

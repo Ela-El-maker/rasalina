@@ -1,6 +1,10 @@
 @extends('frontend.main_master')
 
 @section('main')
+
+@section('title')
+Felo Ela | About
+@endsection
 <main>
 
     <!-- breadcrumb-area -->
